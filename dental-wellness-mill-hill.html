@@ -551,6 +551,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
 .cta-primary{background:var(--teal);color:white}.cta-secondary{background:var(--bg);color:var(--teal);border:1.5px solid var(--teal)}
 .mobile-action-bar{display:none}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem}
 @media(max-width:768px){
   /* Tighten compare widget overall */
   .compare-widget{padding:0.875rem !important}
@@ -615,7 +616,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
           <option value="invisalign">Invisalign</option><option value="whitening">Whitening</option><option value="implant">Implant</option>
         </select>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem">
+      <div class="compare-grid">
         <div style="background:var(--teal-light);border:1.5px solid rgba(10,110,92,0.2);border-radius:10px;padding:10px 12px">
           <div style="font-size:10px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Dental Wellness</div>
           <div style="font-size:22px;font-weight:700;color:var(--teal);line-height:1;margin-bottom:3px" id="comp-practice-price">£45</div>
