@@ -608,7 +608,11 @@ function setFilter(btn,filter){
 function openPractice(id){
   const p=practices.find(x=>x.id===id);
   if(!p)return;
-  window.location.href = p.slug + '.html';
+  const slug = (p.name + '-' + p.area)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  window.location.href = slug + '.html';
 }
 
 function showFeaturedModal(){
