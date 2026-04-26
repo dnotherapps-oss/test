@@ -608,55 +608,7 @@ function setFilter(btn,filter){
 function openPractice(id){
   const p=practices.find(x=>x.id===id);
   if(!p)return;
-  const sections=Object.entries(p.pricing).map(([cat,items])=>`
-    <div class="pricing-section">
-      <div class="pricing-title">${cat}</div>
-      ${items.map(i=>`<div class="price-row"><span class="price-row-name">${i.name}</span><span class="price-row-price">${i.price}</span></div>`).join('')}
-    </div>`).join('');
-  const tagMap={nhs:'tag-nhs NHS',private:'tag-private Private',invisalign:'tag-invisalign Invisalign',implants:'tag-implants Implants',finance:'tag-finance 0% Finance',awards:'tag-awards Award Winner',weekend:'tag-weekend Open Weekends',premium:'tag-awards Premium',specialist:'tag-implants Specialist'};
-  const tagsHtml=p.tags.filter(t=>tagMap[t]).map(t=>{const[cls,...rest]=tagMap[t].split(' ');return`<span class="tag ${cls}">${rest.join(' ')}</span>`;}).join('');
-  document.getElementById('modal-content').innerHTML=`
-    <div class="modal-header">
-      <div class="modal-header-left">
-        <div class="modal-title">${p.name}</div>
-        <div class="modal-addr">${p.address}</div>
-      </div>
-      <div class="modal-header-right">
-        <button class="modal-close" onclick="closeModal()">×</button>
-        <div style="display:flex;gap:6px;margin-top:2px">
-          ${p.phone?`<a href="tel:${p.phone}" class="modal-visit-btn">📞 Call</a>`:''}
-          <a href="https://${p.website}" target="_blank" class="modal-visit-btn">🌐 Visit Website →</a>
-        </div>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem">${tagsHtml}</div>
-      <div class="modal-meta">
-        <div class="meta-item"><div class="meta-label">Rating</div><div class="meta-value" style="white-space:nowrap">⭐ ${p.rating} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' '+p.address)}" target="_blank" style="color:var(--teal);text-decoration:none;border-bottom:1px dotted var(--teal)">${p.reviews}+ reviews</a></div></div>
-        <div class="meta-item"><div class="meta-label">NHS Available</div><div class="meta-value">${p.type==='both'?'Yes (limited)':'Private only'}</div></div>
-        ${p.finance?`<div class="meta-item"><div class="meta-label">Finance</div><div class="meta-value">0% APR available</div></div>`:''}
-      </div>
-      ${p.hours?`<div style="background:var(--bg);border-radius:8px;margin-bottom:1.5rem;overflow:hidden">
-        <button onclick="this.parentElement.classList.toggle('hours-open')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">
-          <span style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">🕐 Opening Hours</span>
-          <span class="hours-chevron" style="font-size:12px;color:var(--text-muted);transition:transform 0.2s">▾</span>
-        </button>
-        <div class="hours-body" style="display:none;padding:0 14px 12px">
-          ${formatHoursModal(p.hours)}
-        </div>
-      </div>`:''}
-      <style>
-        .hours-open .hours-body { display:block !important; }
-        .hours-open .hours-chevron { transform:rotate(180deg); }
-      </style>
-      ${sections}
-      <div class="modal-actions">
-        <a href="https://${p.website}" target="_blank" class="modal-btn modal-btn-primary">Visit Website →</a>
-        <button class="modal-btn modal-btn-secondary" onclick="closeModal()">← Back to results</button>
-      </div>
-      <p style="font-size:11px;color:var(--text-muted);margin-top:1rem;text-align:center">Prices taken from practice website. Always confirm pricing directly before booking.</p>
-    </div>`;
-  document.getElementById('modal-overlay').classList.add('open');
+  window.location.href = p.slug + '.html';
 }
 
 function showFeaturedModal(){
