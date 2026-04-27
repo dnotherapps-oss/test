@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dental Wellness Mill Hill – Private Dental Prices | WhatDentist</title>
+<meta name="description" content="Private dental prices at Dental Wellness Mill Hill, Mill Hill. Check-ups from £45. Rated 5.0★ from 555 reviews.">
+<link rel="canonical" href="https://whatdentist.co.uk/dentist/dental-wellness-mill-hill">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>// WhatDentist Data File
+// Add new practices to this array — averages recalculate automatically
+// ============================================================
+
+const practices = [
+  {
+    id:1, name:"Dental Wellness Mill Hill", area:"Mill Hill",
+    address:"46 The Broadway, London NW7 3LH", phone:"020 7123 9308",
+    website:"dentalwellnessmillhill.co.uk", rating:5.0, reviews:555,
+    type:"private", featured:false, finance:true, openWeekends:true,
+    lat:51.6189, lng:-0.2476,
+    tags:["private","invisalign","implants","finance","weekend"],
+    hours:"Mon 8am–8pm | Tue 8am–7pm | Wed 8:45am–6pm | Thu 8:45am–6pm | Fri 8am–5pm | Sat 8:45am–3pm | Sun 8:45am–2pm",
+    checkupPrice:45, hygienePrice:67, fillingPrice:165, whiteningPrice:340, bondingPrice:250, invisalignPrice:3695, implantPrice:null,
+    pricing:{
+      "Consultations":[{name:"Comprehensive Examination",price:"£45"},{name:"Emergency Appointment",price:"£45"},{name:"Invisalign Consultation",price:"Free"},{name:"Implant Consultation",price:"Free"}],
+      "Hygiene":[{name:"Hygiene Gold Package (25 min)",price:"£67"},{name:"Hygiene Diamond Package (30 min)",price:"£98"},{name:"Hygiene Platinum Package (60 min)",price:"£190"},{name:"Scale and Polish (with dentist)",price:"£85"}],
+      "Fillings":[{name:"White Composite Filling",price:"from £165"}],
+      "Root Canal":[{name:"Root Canal (front)",price:"from £645"},{name:"Root Canal (molar)",price:"from £745"}],
+      "Crowns & Veneers":[{name:"Crown (porcelain)",price:"from £700"},{name:"Veneer",price:"from £775"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"from £250"},{name:"Invisalign",price:"from £3,695"},{name:"Teeth Whitening (home kit)",price:"£340"}],
+      "Implants":[{name:"Dental Implant",price:"Price on consultation"}]
+    }
+  },
+  {
+    id:2, name:"Ecladent Dental Care", area:"Mill Hill",
+    address:"53 Brockenhurst Gardens, Mill Hill, NW7 2JY", phone:"0208 959 9392",
+    website:"ecladent.co.uk", rating:4.7, reviews:382,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.6175, lng:-0.2501,
+    tags:["private","invisalign","implants","aesthetics"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 9am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:65, hygienePrice:25, fillingPrice:100, whiteningPrice:350, bondingPrice:null, invisalignPrice:1500, implantPrice:1600,
+    pricing:{
+      "Consultations":[{name:"Dental Check-up",price:"£65"},{name:"New Patient Appointment",price:"£150"},{name:"Emergency",price:"£105"}],
+      "Hygiene":[{name:"Hygienist",price:"£80"},{name:"Air Flow Polish",price:"£25"}],
+      "Fillings":[{name:"White Filling (small)",price:"£100"},{name:"White Filling (medium)",price:"£105"},{name:"White Filling (large)",price:"£250"}],
+      "Root Canal":[{name:"Root Canal + Filling",price:"£900"}],
+      "Crowns & Veneers":[{name:"Crown (zirconia porcelain)",price:"£950"},{name:"Porcelain Veneers",price:"£695"}],
+      "Cosmetic":[{name:"Tooth Whitening (in surgery)",price:"£190–£350"},{name:"Invisalign",price:"£1,500–£4,500"}],
+      "Implants":[{name:"Dental Implant",price:"£1,600"},{name:"Implant Crown",price:"£1,250"}]
+    }
+  },
+  {
+    id:3, name:"Goodwyn Dental Practice", area:"Mill Hill",
+    address:"51 Goodwyn Ave, London NW7 3RJ", phone:"020 8959 1908",
+    website:"goodwyndentalpractice.co.uk", rating:4.8, reviews:90,
+    type:"both", featured:false, finance:true, openWeekends:true,
+    lat:51.6162, lng:-0.2489,
+    tags:["private","nhs","invisalign","implants","finance","weekend"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 9am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat 9am–5pm | Sun Closed",
+    checkupPrice:65, hygienePrice:35, fillingPrice:50, whiteningPrice:395, bondingPrice:280, invisalignPrice:2500, implantPrice:2900,
+    pricing:{
+      "Consultations":[{name:"Examination (Adult)",price:"£65"},{name:"Examination (Child)",price:"£45"},{name:"Emergency Appointment",price:"£75"}],
+      "Hygiene":[{name:"Hygienist Session (30 min)",price:"£75"},{name:"Airflow",price:"£35"}],
+      "Fillings":[{name:"Amalgam Filling",price:"£50"},{name:"Composite Filling",price:"£135"},{name:"Composite Bonding",price:"£280"}],
+      "Root Canal":[{name:"Root Canal",price:"from £745"}],
+      "Crowns & Veneers":[{name:"All Ceramic Crown",price:"£995"},{name:"Veneer Ceramic",price:"£925"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £2,500"},{name:"Tooth Whitening",price:"from £395"}],
+      "Implants":[{name:"Implant + Crown",price:"from £2,900"}]
+    }
+  },
+  {
+    id:4, name:"Nova Dental Care", area:"East Finchley",
+    address:"260 East End Road, East Finchley, N2 8AU", phone:"020 8365 2365",
+    website:"novadentalcare.co.uk", rating:4.6, reviews:180,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.5882, lng:-0.1657,
+    tags:["private","invisalign","implants","laser"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 9am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:60, hygienePrice:65, fillingPrice:180, whiteningPrice:700, bondingPrice:400, invisalignPrice:2500, implantPrice:2500,
+    pricing:{
+      "Consultations":[{name:"Initial Examination",price:"£80"},{name:"Routine Examination",price:"£60"},{name:"Emergency Visit",price:"£75"}],
+      "Hygiene":[{name:"Scaling and Polish",price:"£90"},{name:"Airflow Treatment",price:"£65"}],
+      "Fillings":[{name:"Composite Filling (posterior)",price:"£180–£280"},{name:"Composite Bonding (each)",price:"£400"}],
+      "Root Canal":[{name:"Root Canal Treatment",price:"£600"},{name:"Root Canal Molar",price:"£900"}],
+      "Crowns & Veneers":[{name:"Ceramic Crown",price:"£750"},{name:"Zirconia Crown",price:"£895"},{name:"Veneers",price:"£800"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £2,500"},{name:"Enlighten Whitening",price:"£700"}],
+      "Implants":[{name:"Implant",price:"from £2,500"}]
+    }
+  },
+  {
+    id:5, name:"Tigga Smile", area:"Northwood",
+    address:"Ground Floor, Argyle House, Joel Street, Northwood HA6 1NW", phone:"01923 829759",
+    website:"tiggasmile.co.uk", rating:5.0, reviews:35,
+    type:"private", featured:false, finance:false, openWeekends:true,
+    lat:51.6067, lng:-0.4234,
+    tags:["private","invisalign","implants","weekend"],
+    hours:"Mon 9am–5:30pm | Tue Closed | Wed 9am–5:30pm | Thu 9am–5:30pm | Fri 9am–5:30pm | Sat 10am–2pm | Sun Closed",
+    checkupPrice:50, hygienePrice:65, fillingPrice:125, whiteningPrice:595, bondingPrice:250, invisalignPrice:3000, implantPrice:2250,
+    pricing:{
+      "Consultations":[{name:"Consultation Fee",price:"£50"},{name:"Emergency Fee",price:"£50"}],
+      "Hygiene":[{name:"Scale & Polish",price:"from £65"}],
+      "Fillings":[{name:"Fillings (White)",price:"from £125"}],
+      "Root Canal":[{name:"Root Canal",price:"from £395"}],
+      "Crowns & Veneers":[{name:"Crown",price:"from £695"},{name:"Veneer",price:"from £695"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"from £250"},{name:"Clear Braces",price:"from £3,000"},{name:"Enlighten Whitening",price:"£595"}],
+      "Implants":[{name:"Implant (excluding crown)",price:"£1,250"},{name:"Implant (including crown)",price:"from £2,250"}]
+    }
+  },
+  {
+    id:6, name:"Broadway Dental Studio", area:"Mill Hill",
+    address:"First Floor, 36-38 Broadway House, The Broadway, NW7 3LJ", phone:"020 8959 2497",
+    website:"broadwaydentalstudio.co.uk", rating:4.9, reviews:356,
+    type:"both", featured:false, finance:false, openWeekends:true,
+    lat:51.6198, lng:-0.2461,
+    tags:["private","nhs","invisalign","insurance","weekend"],
+    hours:"Mon 8:30am–8pm | Tue 8:30am–5:30pm | Wed 8:30am–5:30pm | Thu 8:30am–8pm | Fri 8:30am–5:30pm | Sat 9am–2pm | Sun Closed",
+    checkupPrice:68, hygienePrice:85, fillingPrice:100, whiteningPrice:null, bondingPrice:null, invisalignPrice:875, implantPrice:1450,
+    pricing:{
+      "Consultations":[{name:"Adult Examination",price:"£68"},{name:"Child Examination",price:"£33"},{name:"Emergency",price:"£75"},{name:"Invisalign Consultation",price:"Free"}],
+      "Hygiene":[{name:"Hygienist Scale and Polish",price:"from £85"},{name:"Airflow Scale and Polish",price:"£150"},{name:"Weekend Hygienist",price:"£85"}],
+      "Fillings":[{name:"Composite Filling",price:"£100–£165"}],
+      "Root Canal":[{name:"Root Canal Incisor",price:"from £500"},{name:"Root Canal Premolar",price:"£600"},{name:"Root Canal Molar",price:"£865"}],
+      "Crowns & Veneers":[{name:"Zirconia/E-Max Crown",price:"£895"},{name:"Veneers",price:"from £850"}],
+      "Cosmetic":[{name:"Invisalign/Toscan",price:"from £875"}],
+      "Implants":[{name:"Dental Implants",price:"from £1,450"}]
+    }
+  },
+  {
+    id:7, name:"Glow Dentistry", area:"Mill Hill",
+    address:"23 Daws Lane, London NW7 4SD", phone:"020 8906 7676",
+    website:"glowdentistry.co.uk", rating:4.9, reviews:98,
+    type:"private", featured:false, finance:false, openWeekends:true,
+    lat:51.6155, lng:-0.2512,
+    tags:["private","invisalign","implants","specialist","weekend"],
+    hours:"Mon 8:30am–6:30pm | Tue 8:30am–7:30pm | Wed 8:30am–7:30pm | Thu 8:30am–8pm | Fri 9am–5pm | Sat 10am–4pm | Sun Closed",
+    checkupPrice:85, hygienePrice:75, fillingPrice:295, whiteningPrice:675, bondingPrice:395, invisalignPrice:1800, implantPrice:2600,
+    pricing:{
+      "Consultations":[{name:"New Patient Examination",price:"£85"},{name:"Existing Patient Examination",price:"£75"},{name:"Emergency (inc X-ray)",price:"£150"},{name:"Cosmetic Consultation",price:"Free"}],
+      "Hygiene":[{name:"Hygiene Session",price:"from £75"},{name:"Air Flow Hygiene",price:"from £165"}],
+      "Fillings":[{name:"White Composite Filling",price:"from £295"}],
+      "Root Canal":[{name:"Root Canal Incisor (specialist)",price:"£900–£1,200"},{name:"Root Canal Molar (specialist)",price:"£1,300–£1,650"}],
+      "Crowns & Veneers":[{name:"Ceramic Crown",price:"from £1,395"},{name:"Smile Makeover",price:"from £1,295/tooth"}],
+      "Cosmetic":[{name:"Cosmetic Bonding",price:"from £395"},{name:"Invisalign Minor",price:"from £1,800"},{name:"Invisalign Complex",price:"from £4,300"},{name:"Enlighten Whitening",price:"£675"}],
+      "Implants":[{name:"Nobel Biocare Implant (specialist)",price:"£2,600"}]
+    }
+  },
+  {
+    id:8, name:"The Tooth Sanctuary", area:"Colindale",
+    address:"3A Sheaveshill Ave, London NW9 6SH", phone:"020 8205 6690",
+    website:"thetoothsanctuary.co.uk", rating:4.8, reviews:290,
+    type:"both", featured:false, finance:false, openWeekends:false,
+    lat:51.5953, lng:-0.2534,
+    tags:["private","nhs","invisalign","implants"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 9am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:45, hygienePrice:75, fillingPrice:null, whiteningPrice:null, bondingPrice:null, invisalignPrice:1500, implantPrice:2500,
+    pricing:{
+      "Consultations":[{name:"Dental Examination",price:"£45"},{name:"Orthodontic Assessment",price:"from £125"},{name:"Implant Assessment",price:"from £65"}],
+      "Hygiene":[{name:"Hygiene Appointment (30 min)",price:"£75"}],
+      "Root Canal":[{name:"Root Canal Treatment",price:"from £350"}],
+      "Crowns & Veneers":[{name:"Crowns",price:"from £500"},{name:"Inlay/Onlay",price:"from £500"}],
+      "Cosmetic":[{name:"Invisalign Braces",price:"from £1,500"}],
+      "Implants":[{name:"Implants + Abutment + Crown",price:"from £2,500"}]
+    }
+  },
+  {
+    id:9, name:"Colindale Dental", area:"Colindale",
+    address:"49-51 Colindale Ave, London NW9 5EP", phone:"020 8205 5636",
+    website:"colindaledental.co.uk", rating:4.7, reviews:629,
+    type:"both", featured:false, finance:false, openWeekends:true,
+    lat:51.5963, lng:-0.2496,
+    tags:["private","nhs","weekend"],
+    hours:"Mon 9am–6pm | Tue 9am–6pm | Wed 9am–7pm | Thu 9am–7pm | Fri 9am–6pm | Sat 8:30am–3pm | Sun Closed",
+    checkupPrice:55, hygienePrice:65, fillingPrice:80, whiteningPrice:375, bondingPrice:null, invisalignPrice:4000, implantPrice:1995,
+    pricing:{
+      "Consultations":[{name:"Patient Consultation",price:"from £55"}],
+      "Hygiene":[{name:"Hygiene (30 min)",price:"from £65"},{name:"Hygiene (60 min)",price:"from £125"}],
+      "Fillings":[{name:"White Fillings",price:"from £80"}],
+      "Root Canal":[{name:"Root Canal Treatment",price:"from £350"}],
+      "Crowns & Veneers":[{name:"Crowns",price:"from £550"}],
+      "Cosmetic":[{name:"Boutique Home Whitening",price:"from £375"},{name:"Enlighten Whitening",price:"from £675"},{name:"Invisalign",price:"from £4,000"}],
+      "Implants":[{name:"Implants + Abutment + Crown",price:"from £2,690"}]
+    }
+  },
+  {
+    id:10, name:"North Finchley Dental", area:"North Finchley",
+    address:"1st Floor, 787 High Road, London N12 8JX", phone:"020 8445 5954",
+    website:"northfinchleydental.co.uk", rating:4.9, reviews:79,
+    type:"private", featured:false, finance:false, openWeekends:true,
+    lat:51.6098, lng:-0.1782,
+    tags:["private","whitening","weekend"],
+    hours:"Mon 9am–5:30pm | Tue 9am–9pm | Wed 9am–5:30pm | Thu 9am–5:30pm | Fri 9am–5:30pm | Sat 9am–1pm | Sun Closed",
+    checkupPrice:55, hygienePrice:75, fillingPrice:85, whiteningPrice:395, bondingPrice:null, invisalignPrice:null, implantPrice:2300,
+    pricing:{
+      "Consultations":[{name:"Examination",price:"£55"},{name:"Emergency",price:"£50"}],
+      "Hygiene":[{name:"Hygienist (30 min)",price:"£75"}],
+      "Fillings":[{name:"Filling (small)",price:"£85"},{name:"Filling (large)",price:"£125"}],
+      "Root Canal":[{name:"Root Canal Incisor",price:"£350"},{name:"Root Canal Molar",price:"£550"}],
+      "Crowns & Veneers":[{name:"Crowns",price:"from £650"}],
+      "Cosmetic":[{name:"Zoom Whitening",price:"£395"},{name:"Whitening + Trays",price:"£495"}],
+      "Implants":[{name:"Implants including Crown",price:"from £2,300"}]
+    }
+  },
+  {
+    id:11, name:"Smile Cliniq", area:"Finchley",
+    address:"138 Ballards Lane, Church End, London N3 2PA", phone:"020 8343 1133",
+    website:"smilecliniq.com", rating:4.7, reviews:367,
+    type:"private", featured:false, finance:true, openWeekends:true,
+    lat:51.5997, lng:-0.1927,
+    tags:["private","invisalign","implants","finance","awards","weekend"],
+    hours:"Mon 8am–8pm | Tue 8am–6pm | Wed 8am–5pm | Thu 8am–6pm | Fri 8am–6pm | Sat 8am–6pm | Sun Closed",
+    checkupPrice:75, hygienePrice:110, fillingPrice:220, whiteningPrice:650, bondingPrice:280, invisalignPrice:1795, implantPrice:2000,
+    pricing:{
+      "Consultations":[{name:"New Patient Evaluation",price:"£75"},{name:"Emergency",price:"£85"},{name:"Virtual Consultation",price:"Free"}],
+      "Hygiene":[{name:"Simple Hygiene",price:"£110"},{name:"Extended Hygiene",price:"£150"}],
+      "Fillings":[{name:"Small Composite Filling",price:"from £220"},{name:"Large Composite Filling",price:"from £295"}],
+      "Root Canal":[{name:"Root Canal (per canal)",price:"£300"},{name:"Root Canal Molar",price:"£750"}],
+      "Crowns & Veneers":[{name:"Emax Crown",price:"£750"},{name:"Zirconia Crown",price:"£850"},{name:"Porcelain Veneer",price:"£850"},{name:"SmileFast 6 Teeth Veneers",price:"£3,000"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"£280"},{name:"Invisalign i7",price:"£1,795"},{name:"Full Invisalign",price:"£3,500"},{name:"Enlighten Whitening",price:"£650"}],
+      "Implants":[{name:"Single Implant with Crown",price:"£2,000"}]
+    }
+  },
+  {
+    id:12, name:"Beaufort Dental Clinic", area:"Colindale",
+    address:"10 Boulevard Drive, Beaufort Park, London NW9 5QF", phone:"020 8205 0090",
+    website:"beaufortdentalclinic.com", rating:4.3, reviews:165,
+    type:"private", featured:false, finance:true, openWeekends:true,
+    lat:51.5972, lng:-0.2478,
+    tags:["private","invisalign","implants","finance","weekend"],
+    hours:"Mon 9am–5:30pm | Tue 9am–5:30pm | Wed 9am–5:30pm | Thu 9am–5:30pm | Fri 9am–5:30pm | Sat 9am–3pm | Sun Closed",
+    checkupPrice:38.50, hygienePrice:88, fillingPrice:127, whiteningPrice:399, bondingPrice:192, invisalignPrice:3080, implantPrice:null,
+    pricing:{
+      "Consultations":[{name:"New Patient Examination (inc 2 X-rays)",price:"£55"},{name:"Routine Examination",price:"£38.50"},{name:"Emergency",price:"£55"}],
+      "Hygiene":[{name:"Hygiene 45 min",price:"£88"},{name:"Hygiene with Airflow",price:"£132"}],
+      "Fillings":[{name:"Composite Filling (small)",price:"£127"},{name:"Composite Bonding (per tooth)",price:"£192"}],
+      "Root Canal":[{name:"Root Canal Incisor",price:"£466"},{name:"Root Canal Molar",price:"£720"}],
+      "Crowns & Veneers":[{name:"Zirconia Crown",price:"£720"},{name:"Layered E-max Crown",price:"£906"}],
+      "Cosmetic":[{name:"Invisalign (single arch)",price:"£3,080"},{name:"Invisalign (both arches)",price:"£3,850"},{name:"Home Zoom Whitening",price:"£399"}]
+    }
+  },
+  {
+    id:13, name:"3one one Dental Care", area:"North Finchley",
+    address:"311 Ballards Lane, North Finchley, N12 8LY", phone:"020 8445 2722",
+    website:"311dental.co.uk", rating:5.0, reviews:247,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.6089, lng:-0.1801,
+    tags:["private","children"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 9am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:81, hygienePrice:81, fillingPrice:100, whiteningPrice:375, bondingPrice:null, invisalignPrice:null, implantPrice:2400,
+    pricing:{
+      "Consultations":[{name:"New Patient Consultation (inc X-rays)",price:"£150"},{name:"Routine Examination",price:"£81"},{name:"Children's Examination",price:"£41"}],
+      "Hygiene":[{name:"Hygienist Standard",price:"£81"},{name:"Hygienist Extended",price:"£122"}],
+      "Fillings":[{name:"Fillings",price:"from £100"}],
+      "Root Canal":[{name:"Root Treatment",price:"from £595"}],
+      "Crowns & Veneers":[{name:"Crowns",price:"from £900"},{name:"Veneers",price:"from £900"}],
+      "Cosmetic":[{name:"Tooth Whitening",price:"from £375"}],
+      "Implants":[{name:"Implants including Crown",price:"from £2,400"}]
+    }
+  },
+  {
+    id:14, name:"Nether Street Dental Practice", area:"Finchley",
+    address:"393 Nether Street, London N3 1QG", phone:"",
+    website:"netherdental.co.uk", rating:4.7, reviews:143,
+    type:"both", featured:false, finance:false, openWeekends:false,
+    lat:51.5967, lng:-0.1889,
+    tags:["private","nhs","invisalign","insurance"],
+    hours:"Mon 9am–5pm | Tue 9am–5pm | Wed 8:30am–5pm | Thu 9am–5pm | Fri 9am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:51.50, hygienePrice:77.5, fillingPrice:155, whiteningPrice:null, bondingPrice:199, invisalignPrice:1900, implantPrice:2600,
+    pricing:{
+      "Consultations":[{name:"New Patient Assessment",price:"£65"},{name:"Routine Check Up",price:"£51.50"},{name:"Emergency",price:"£75"}],
+      "Hygiene":[{name:"Hygiene Therapy (25 min)",price:"£77.50"},{name:"Hygiene with Air Polish",price:"£110"}],
+      "Fillings":[{name:"Small Composite Filling",price:"£155"},{name:"Large Composite Filling",price:"from £215"}],
+      "Root Canal":[{name:"Root Canal Incisor",price:"£295"},{name:"Root Canal Molar",price:"£435"}],
+      "Crowns & Veneers":[{name:"Zirconia Crown",price:"£750"},{name:"Porcelain Veneers",price:"£575"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"£199/tooth"},{name:"Clear Aligners",price:"from £1,900/arch"}],
+      "Implants":[{name:"Implant & Crown",price:"£2,600"}]
+    }
+  },
+  {
+    id:15, name:"Approach Dentistry", area:"Hendon",
+    address:"5 The Approach, London NW4 2HS", phone:"020 8202 9767",
+    website:"approachdentistry.co.uk", rating:4.8, reviews:298,
+    type:"both", featured:false, finance:false, openWeekends:false,
+    lat:51.5868, lng:-0.2312,
+    tags:["private","nhs","invisalign","implants"],
+    hours:"Mon 8:30am–5pm | Tue 8:30am–5pm | Wed 8:30am–5pm | Thu 8:30am–5pm | Fri 8:30am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:50, hygienePrice:25, fillingPrice:125, whiteningPrice:400, bondingPrice:200, invisalignPrice:3000, implantPrice:2790,
+    pricing:{
+      "Consultations":[{name:"New Patient Exam (inc radiographs)",price:"£70"},{name:"Exam",price:"£50"},{name:"Child Exam",price:"£40"}],
+      "Hygiene":[{name:"Hygiene New Patient",price:"£90"},{name:"Hygiene Maintenance",price:"£75"},{name:"Airflow Stain Removal",price:"£25"}],
+      "Fillings":[{name:"Composite (small)",price:"£125"},{name:"Composite (large)",price:"£300"}],
+      "Root Canal":[{name:"Root Canal Single Canal",price:"£395"},{name:"Root Canal Multi Canal",price:"£495"}],
+      "Crowns & Veneers":[{name:"Zirconia Crown",price:"£695"},{name:"Porcelain Veneers",price:"£695"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"from £200/tooth"},{name:"Teeth Whitening",price:"£400"},{name:"Adult Aligners",price:"£3,000"}],
+      "Implants":[{name:"Implant and Crown",price:"from £2,790"}]
+    }
+  },
+  {
+    id:16, name:"Smile Clinic Group", area:"Colindale",
+    address:"263 Edgware Road, London NW9 6NB", phone:"020 8205 7744",
+    website:"smileclinicgroup.com", rating:4.7, reviews:469,
+    type:"both", featured:false, finance:true, openWeekends:false,
+    lat:51.5941, lng:-0.2468,
+    tags:["private","nhs","invisalign","implants","finance","multi-location"],
+    hours:"Mon 8:30am–5pm | Tue 8:30am–5pm | Wed 8:30am–5pm | Thu 8:30am–5pm | Fri 8:30am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:75, hygienePrice:80, fillingPrice:140, whiteningPrice:695, bondingPrice:290, invisalignPrice:1790, implantPrice:2910,
+    pricing:{
+      "Consultations":[{name:"New Patient Exam",price:"from £75"},{name:"Recall Exam",price:"from £65"},{name:"Child Exam (under 16)",price:"from £35"},{name:"Emergency",price:"from £75"}],
+      "Hygiene":[{name:"Scale and Polish (30 min)",price:"from £80"},{name:"Scale and Polish (60 min)",price:"from £160"},{name:"Periodontal Treatment",price:"from £180"}],
+      "Fillings":[{name:"Composite Filling (small)",price:"from £140"},{name:"Composite Filling (large)",price:"from £210"}],
+      "Root Canal":[{name:"Incisor (general dentist)",price:"from £350"},{name:"Molar (general dentist)",price:"from £585"},{name:"Specialist Endodontist",price:"from £1,127.50"}],
+      "Crowns & Veneers":[{name:"All Porcelain Crown",price:"from £695"},{name:"Porcelain Veneer",price:"from £810"}],
+      "Cosmetic":[{name:"Composite Bonding (single tooth)",price:"from £290"},{name:"Invisalign Express (dual arch)",price:"from £1,790"},{name:"Invisalign Comprehensive",price:"from £4,180"},{name:"Enlighten Whitening",price:"from £695"}],
+      "Implants":[{name:"Single Tooth Implant",price:"from £2,910"},{name:"All on 4 (single arch)",price:"from £18,695"}]
+    }
+  },
+  {
+    id:17, name:"Woodhouse Implants & Aesthetics", area:"North Finchley",
+    address:"229A Woodhouse Road, London N12 9BD", phone:"020 8368 9229",
+    website:"woodhousedental.co.uk", rating:4.8, reviews:173,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.6078, lng:-0.1795,
+    tags:["private","implants","specialist","aesthetics"],
+    hours:"Mon 9am–1pm, 2–6pm | Tue 9am–1pm, 2–6pm | Wed 9am–1pm, 2–6pm | Thu 9am–1pm, 2–6pm | Fri 9am–1pm, 2–6pm | Sat Closed | Sun Closed",
+    checkupPrice:65, hygienePrice:90, fillingPrice:150, whiteningPrice:595, bondingPrice:275, invisalignPrice:3000, implantPrice:3000,
+    pricing:{
+      "Consultations":[{name:"Regular Patient Examination",price:"£65"},{name:"New Patient Examination",price:"£85"},{name:"Child Examination",price:"£25"},{name:"Emergency Assessment",price:"£70"}],
+      "Hygiene":[{name:"Hygiene Maintenance",price:"£90"},{name:"Periodontal Hygiene",price:"£360"}],
+      "Fillings":[{name:"Composite Fillings",price:"from £150"}],
+      "Root Canal":[{name:"Incisor RCT",price:"from £520"},{name:"Molar RCT",price:"from £795"}],
+      "Crowns & Veneers":[{name:"Crown",price:"from £800"},{name:"Porcelain Veneer",price:"from £500"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"from £275"},{name:"Aligners",price:"from £3,000"},{name:"Zoom Whitening",price:"£595"}],
+      "Implants":[{name:"Single Dental Implant",price:"from £3,000"},{name:"Implant Bridge",price:"from £4,500"}],
+      "Facial Aesthetics":[{name:"Anti-Wrinkle 1 Area",price:"£175"},{name:"Anti-Wrinkle 3 Areas",price:"£275"},{name:"Dermal Filler",price:"from £210/ml"}]
+    }
+  },
+  {
+    id:18, name:"110 Total Dentistry", area:"Finchley",
+    address:"110-112 Ballards Lane, Church End, London N3 2DN", phone:"020 7998 7657",
+    website:"110totaldentistry.co.uk", rating:4.9, reviews:74,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.5990, lng:-0.1935,
+    tags:["private","invisalign","implants"],
+    hours:"Mon 9am–6pm | Tue 9am–6pm | Wed 9am–6pm | Thu 9am–6pm | Fri 9am–6pm | Sat Closed | Sun Closed",
+    checkupPrice:45, hygienePrice:75, fillingPrice:110, whiteningPrice:290, bondingPrice:null, invisalignPrice:1700, implantPrice:1900,
+    pricing:{
+      "Consultations":[{name:"New Patient Exam",price:"£75"},{name:"New Child Exam (under 16)",price:"Free"},{name:"Routine Examination",price:"£45"},{name:"X-rays",price:"£10"}],
+      "Hygiene":[{name:"Hygiene",price:"£75"},{name:"Diamond Clean",price:"£95"}],
+      "Fillings":[{name:"Resin/Composite Filling",price:"from £110"}],
+      "Root Canal":[{name:"Root Canal Treatment",price:"£290/canal"}],
+      "Crowns & Veneers":[{name:"Porcelain Crowns",price:"from £490"}],
+      "Cosmetic":[{name:"Invisible Braces",price:"from £1,700"},{name:"Whitening (in surgery)",price:"from £390"},{name:"Whitening (home kit)",price:"from £290"}],
+      "Implants":[{name:"Implants (excluding crown)",price:"from £1,900"}]
+    }
+  },
+  {
+    id:19, name:"Care Dental Smile", area:"Edgware",
+    address:"2 Stag Lane, Burnt Oak, Edgware HA8 5JY", phone:"020 8951 0003",
+    website:"caredentalsmile.com", rating:4.8, reviews:253,
+    type:"both", featured:false, finance:true, openWeekends:true,
+    lat:51.6012, lng:-0.2687,
+    tags:["private","nhs","implants","finance","weekend"],
+    hours:"Mon 9am–6pm | Tue 9am–6pm | Wed 9am–6pm | Thu 9am–6pm | Fri 9am–5pm | Sat 9am–3pm | Sun Closed",
+    checkupPrice:40, hygienePrice:60, fillingPrice:80, whiteningPrice:350, bondingPrice:null, invisalignPrice:null, implantPrice:1800,
+    pricing:{
+      "Consultations":[{name:"New Patient Consultation (inc radiographs)",price:"£50"},{name:"Regular Check Up (inc scale & polish)",price:"£40"},{name:"Emergency (inc radiographs)",price:"£50"}],
+      "Hygiene":[{name:"Hygiene Appointment (30 min)",price:"£60"}],
+      "Fillings":[{name:"Tooth Coloured Filling",price:"£80–£180"}],
+      "Root Canal":[{name:"Root Canal (per root)",price:"from £150"}],
+      "Crowns & Veneers":[{name:"Full Ceramic Crown",price:"from £400"},{name:"Porcelain Veneer",price:"from £350"}],
+      "Cosmetic":[{name:"Tooth Whitening",price:"from £350"}],
+      "Implants":[{name:"Implants",price:"from £1,800"}]
+    }
+  },
+  {
+    id:20, name:"Smile NW Dental Practice", area:"Temple Fortune",
+    address:"17 Hallswelle Parade, Finchley Road, London NW11 0DL", phone:"020 8458 2333",
+    website:"smile-nw.co.uk", rating:4.9, reviews:189,
+    type:"private", featured:false, finance:true, openWeekends:true,
+    lat:51.5793, lng:-0.1965,
+    tags:["private","invisalign","implants","finance","weekend"],
+    hours:"Mon 9am–6pm | Tue 9am–6pm | Wed 9am–6pm | Thu 9am–6pm | Fri 9am–6pm | Sat 9am–2pm | Sun Closed",
+    checkupPrice:95, hygienePrice:75, fillingPrice:250, whiteningPrice:650, bondingPrice:null, invisalignPrice:3799, implantPrice:3000,
+    pricing:{
+      "Consultations":[{name:"Adult Examination",price:"£95"},{name:"New Patient Examination",price:"£95"},{name:"Child Examination (under 16)",price:"£75"},{name:"Implant Consultation",price:"£180"}],
+      "Hygiene":[{name:"Adult Hygiene inc Airflow (45 min)",price:"£135"},{name:"Child Hygiene (30 min)",price:"£75"}],
+      "Fillings":[{name:"Composite Filling",price:"from £250"}],
+      "Root Canal":[{name:"Anterior",price:"£850"},{name:"Premolar",price:"£1,200"},{name:"Molar",price:"£1,200"}],
+      "Crowns & Veneers":[{name:"Porcelain Crown",price:"£1,300"},{name:"Veneer",price:"£850"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £3,799"},{name:"Enlighten Whitening",price:"£650"}],
+      "Implants":[{name:"Implant",price:"£3,000"}],
+      "Facial Aesthetics":[{name:"Botox One Area",price:"from £194"},{name:"Lip Filler",price:"from £125"},{name:"Cheeks Filler",price:"from £350"}]
+    }
+  },
+  {
+    id:21, name:"Covent Garden Dental Practice", area:"Central London",
+    address:"61G Odhams Walk, London WC2H 9SD", phone:"020 7836 9161",
+    website:"cgdp.com", rating:4.8, reviews:208,
+    type:"private", featured:false, finance:false, openWeekends:true,
+    lat:51.5138, lng:-0.1234,
+    tags:["private","invisalign","implants","awards","weekend"],
+    hours:"Mon 8am–6pm | Tue 8am–6pm | Wed 8am–6pm | Thu 8am–6pm | Fri 8am–6pm | Sat 9am–4pm | Sun Closed",
+    checkupPrice:65, hygienePrice:119, fillingPrice:149, whiteningPrice:430, bondingPrice:null, invisalignPrice:null, implantPrice:3600,
+    pricing:{
+      "Consultations":[{name:"New Patient Consultation (inc X-rays)",price:"£120"},{name:"Routine Check-up",price:"£65"},{name:"Urgent Consultation (new patient)",price:"£120"},{name:"Urgent Consultation (regular)",price:"£85"}],
+      "Hygiene":[{name:"Deep Cleaning inc Diamond Polish",price:"£119"}],
+      "Fillings":[{name:"Bonded Filling (small)",price:"from £149"},{name:"Bonded Filling (large)",price:"from £279"}],
+      "Crowns & Veneers":[{name:"Crowns, Bridges & Veneers",price:"from £945"}],
+      "Cosmetic":[{name:"Tooth Whitening",price:"from £430"},{name:"Facial Aesthetic Treatment",price:"from £250"}],
+      "Implants":[{name:"Implant (single back tooth)",price:"£3,600"},{name:"Implant (single front tooth)",price:"£3,850"}],
+      "Extractions":[{name:"Extractions",price:"from £249"}]
+    }
+  },
+  {
+    id:22, name:"Pall Mall Dental London", area:"Central London",
+    address:"15 Pall Mall, London SW1Y 5LU", phone:"020 7766 7150",
+    website:"pallmalldental.co.uk", rating:4.8, reviews:235,
+    type:"private", featured:false, finance:true, openWeekends:false,
+    lat:51.5073, lng:-0.1353,
+    tags:["private","invisalign","implants","finance"],
+    hours:"Mon 8:30am–5:30pm | Tue 8:30am–5:30pm | Wed 8:30am–5:30pm | Thu 8:30am–5:30pm | Fri 8:30am–5:30pm | Sat Closed | Sun Closed",
+    checkupPrice:60, hygienePrice:95, fillingPrice:190, whiteningPrice:460, bondingPrice:null, invisalignPrice:1900, implantPrice:3400,
+    pricing:{
+      "Consultations":[{name:"New Patient Exam (inc 2 X-rays)",price:"£80"},{name:"Routine Exam (inc 2 X-rays)",price:"£60"},{name:"Child Exam (inc 2 X-rays)",price:"£30"},{name:"Emergency",price:"£130"}],
+      "Hygiene":[{name:"Quick Smile (20 min)",price:"£95"},{name:"Super Clean",price:"£105"},{name:"Ultra Clean",price:"£155"}],
+      "Fillings":[{name:"Composite Filling (small)",price:"£190"},{name:"Composite Bonding",price:"£190–£550"}],
+      "Root Canal":[{name:"Anterior",price:"£710"},{name:"Pre-Molar",price:"£780"},{name:"Molar",price:"£885"}],
+      "Crowns & Veneers":[{name:"Full Ceramic Crown",price:"from £995"},{name:"Porcelain Veneers",price:"from £1,100"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £1,900–£6,250"},{name:"Home Whitening Kit",price:"£460"},{name:"In-Office Laser Whitening",price:"£630"}],
+      "Implants":[{name:"Dental Implant and Crown",price:"£3,400"},{name:"Same Day Teeth (per jaw)",price:"£17,545"}],
+      "Facial Aesthetics":[{name:"Anti-Wrinkle 1 Area",price:"£250"},{name:"Anti-Wrinkle 3 Areas",price:"£350"}]
+    }
+  },
+  {
+    id:23, name:"Centre Point Dental", area:"Central London",
+    address:"Flat 4, 132 Charing Cross Road, London WC2H 0LA", phone:"020 7836 9259",
+    website:"centrepointdental.co.uk", rating:4.8, reviews:213,
+    type:"private", featured:false, finance:true, openWeekends:false,
+    lat:51.5152, lng:-0.1283,
+    tags:["private","invisalign","implants","finance"],
+    hours:"Mon 8:45am–5:45pm | Tue 8:45am–5:45pm | Wed 8:45am–5:45pm | Thu 8:45am–5:45pm | Fri 8:45am–5:45pm | Sat Closed | Sun Closed",
+    checkupPrice:99, hygienePrice:83, fillingPrice:95, whiteningPrice:750, bondingPrice:null, invisalignPrice:1500, implantPrice:1500,
+    pricing:{
+      "Consultations":[{name:"New Patient Consultation (inc 2 radiographs)",price:"£99"},{name:"Additional Radiographs",price:"£10 each"}],
+      "Hygiene":[{name:"Hygiene Session (30 min)",price:"£83"},{name:"Hygiene Session (60 min)",price:"£150"}],
+      "Fillings":[{name:"White Fillings",price:"from £95"}],
+      "Root Canal":[{name:"Endodontics/Root Canal",price:"from £399"}],
+      "Crowns & Veneers":[{name:"Crowns",price:"from £650"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £1,500"},{name:"Zoom Whitening (inc home kit)",price:"£750"},{name:"Enlighten Whitening",price:"£850"}],
+      "Implants":[{name:"Dental Implants",price:"from £1,500"}]
+    }
+  },
+  {
+    id:24, name:"Piccadilly Dental", area:"Central London",
+    address:"72 Shaftesbury Avenue, London W1D 6NA", phone:"020 7437 0154",
+    website:"piccadillydental.co.uk", rating:4.7, reviews:76,
+    type:"private", featured:false, finance:true, openWeekends:false,
+    lat:51.5132, lng:-0.1306,
+    tags:["private","invisalign","implants","finance"],
+    hours:"Mon 10am–5pm | Tue 10am–5pm | Wed 10am–5pm | Thu 10am–5pm | Fri 10am–5pm | Sat Closed | Sun Closed",
+    checkupPrice:70, hygienePrice:95, fillingPrice:180, whiteningPrice:399, bondingPrice:250, invisalignPrice:1900, implantPrice:null,
+    pricing:{
+      "Consultations":[{name:"New Exam",price:"£80"},{name:"Routine Exam",price:"£70"},{name:"Emergency",price:"£99"}],
+      "Hygiene":[{name:"Hygiene (45 min)",price:"from £95"},{name:"Hygiene (60 min)",price:"from £150"},{name:"Airflow",price:"from £120"}],
+      "Fillings":[{name:"Composite Small",price:"from £180"},{name:"Composite Large",price:"from £300"}],
+      "Root Canal":[{name:"Anterior",price:"from £450"},{name:"Premolars",price:"from £550"},{name:"Molars",price:"from £700"}],
+      "Crowns & Veneers":[{name:"Ceramic Crown",price:"from £750"},{name:"Porcelain Veneers",price:"from £800"},{name:"Composite Bonding",price:"from £250"}],
+      "Cosmetic":[{name:"Invisalign",price:"from £1,900"},{name:"Home Whitening",price:"from £399"},{name:"In Practice Whitening",price:"from £600"}]
+    }
+  },
+  {
+    id:25, name:"Wimpole Street Dental Clinic", area:"Marylebone",
+    address:"38 Queen Anne Street, London W1G 8HZ", phone:"020 3769 9697",
+    website:"wimpolestreetdental.clinic", rating:4.9, reviews:313,
+    type:"private", featured:false, finance:false, openWeekends:false,
+    lat:51.5183, lng:-0.1478,
+    tags:["private","invisalign","implants","specialist","premium"],
+    hours:"Mon 9am–6pm | Tue 9am–6pm | Wed 9am–6pm | Thu 9am–6pm | Fri 9am–5:30pm | Sat Closed | Sun Closed",
+    checkupPrice:150, hygienePrice:150, fillingPrice:250, whiteningPrice:550, bondingPrice:390, invisalignPrice:2500, implantPrice:2200,
+    pricing:{
+      "Consultations":[{name:"New Patient Consultation (inc X-rays)",price:"£240"},{name:"Existing Patient Consultation",price:"£150"},{name:"Child Consultation (up to 14)",price:"£150"}],
+      "Hygiene":[{name:"Dental Hygiene with GBT",price:"£190"},{name:"Dental Hygiene for Children",price:"£150"},{name:"Hygiene under Local Anaesthetic",price:"£250"}],
+      "Fillings":[{name:"Composite Filling",price:"from £250"},{name:"Composite Veneer",price:"£600"}],
+      "Root Canal":[{name:"Front Tooth (Incisor/Canine)",price:"£1,250"},{name:"Premolar",price:"£1,300"},{name:"Molar",price:"£1,500"},{name:"Specialist Endodontist",price:"from £1,127.50"}],
+      "Crowns & Veneers":[{name:"Crown",price:"from £1,600"},{name:"Veneer",price:"from £1,700"},{name:"Inlay/Onlay",price:"£1,600"}],
+      "Cosmetic":[{name:"Composite Bonding",price:"from £390"},{name:"Invisalign i7",price:"from £2,500"},{name:"Invisalign Full (unlimited)",price:"from £5,995"},{name:"Lingual Hidden Braces (both arches)",price:"from £9,995"},{name:"In-office Whitening",price:"£550"},{name:"Zoom Whitening inc Home Kit",price:"£950"}],
+      "Implants":[{name:"Implant Placement (per implant)",price:"£2,200"},{name:"All-on-4 Fixed Teeth",price:"from £15,000"},{name:"Bone Graft",price:"£1,200"}],
+      "Extractions":[{name:"Simple Extraction",price:"£400"},{name:"Wisdom Tooth (upper jaw)",price:"£700"},{name:"Wisdom Tooth with Nerve",price:"£1,000"}],
+      "Facial Aesthetics":[{name:"Anti-Wrinkle Injection",price:"from £295"},{name:"Dermal Fillers",price:"from £350"},{name:"Profhilo",price:"from £350"}]
+    }
+  }
+];
+
+// ============================================================
+// AUTO-CALCULATED LONDON AVERAGES
+// These update automatically as you add more practices above
+// ============================================================
+
+function calcAverages() {
+  const fields = ['checkupPrice','hygienePrice','fillingPrice','bondingPrice','invisalignPrice','implantPrice','whiteningPrice'];
+  const labels = {
+    checkupPrice:    {label:'Check-up',       key:'checkup'},
+    hygienePrice:    {label:'Hygiene',         key:'hygiene'},
+    fillingPrice:    {label:'Filling',         key:'filling'},
+    bondingPrice:    {label:'Composite Bonding',key:'bonding'},
+    invisalignPrice: {label:'Invisalign',      key:'invisalign'},
+    implantPrice:    {label:'Implant',         key:'implant'},
+    whiteningPrice:  {label:'Whitening',       key:'whitening'},
+  };
+
+  const avgs = {};
+  fields.forEach(field => {
+    const vals = practices.map(p => p[field]).filter(v => v != null && v > 0);
+    if (vals.length === 0) return;
+    const avg = Math.round(vals.reduce((a,b) => a+b, 0) / vals.length);
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    const fmt = n => n >= 1000 ? '£' + n.toLocaleString() : '£' + n;
+    avgs[labels[field].key] = {
+      label:    labels[field].label,
+      avg:      avg,
+      avgFmt:   fmt(avg),
+      min:      fmt(min),
+      max:      fmt(max),
+      count:    vals.length,
+    };
+  });
+  return avgs;
+}
+
+const londonAverages = calcAverages();
+const practiceCount = practices.length;
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dentist","name":"Dental Wellness Mill Hill","telephone":"020 7123 9308","address":{"@type":"PostalAddress","streetAddress":"46 The Broadway, London NW7 3LH","addressLocality":"London","postalCode":"NW7 3LH","addressCountry":"GB"},"geo":{"@type":"GeoCoordinates","latitude":51.6189,"longitude":-0.1},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"555"}}</script>
+<style>
+:root{--teal:#0a6e5c;--teal-dark:#084d40;--teal-light:#e6f4f1;--accent:#f0b429;--text:#1a1a2e;--text-muted:#6b7280;--border:#e5e7eb;--bg:#f8faf9}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+.header{background:var(--teal-dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:white;text-decoration:none}.logo span{color:var(--accent)}
+.header-nav a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px;font-weight:500;margin-left:1.5rem}
+.page-layout{max-width:1100px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start}
+.practice-photo{width:100%;height:320px;object-fit:cover;object-position:center center;border-radius:14px;margin-bottom:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.12)}
+.practice-name{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1.2;margin-bottom:0.5rem}
+.section{background:white;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.section-inner{padding:1.5rem}
+.section-title{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:2px solid var(--teal-light)}
+.sidebar{position:sticky;top:76px;display:flex;flex-direction:column;gap:1rem}
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.cta-primary{background:var(--teal);color:white}.cta-secondary{background:var(--bg);color:var(--teal);border:1.5px solid var(--teal)}
+.mobile-action-bar{display:none}
+.compare-widget{background:white;border:1.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem}
+.compare-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem}
+.compare-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text)}
+.compare-select{border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:white;cursor:pointer;outline:none}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem}
+.compare-col{background:var(--bg);border-radius:10px;padding:14px}
+.compare-col.highlight{background:var(--teal-light);border:1.5px solid rgba(10,110,92,0.2)}
+.compare-col-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.compare-col.highlight .compare-col-label{color:var(--teal)}
+.compare-price{font-size:26px;font-weight:700;color:var(--teal);line-height:1;margin-bottom:4px}
+.compare-col:not(.highlight) .compare-price{color:var(--text-muted);font-size:22px}
+.compare-verdict{font-size:12px;font-weight:600;margin-top:6px}
+.compare-bar-wrap{margin-top:0.75rem}
+.compare-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:4px}
+.compare-bar-track{background:var(--border);border-radius:4px;height:8px;overflow:hidden}
+.compare-bar-fill{height:100%;border-radius:4px;transition:width 0.4s ease}
+.bar-practice{background:var(--teal)}
+.bar-london{background:#94a3b8}
+.key-prices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:1rem;border-top:1px solid var(--border)}
+.kp-item{background:var(--bg);border-radius:8px;padding:10px 12px}
+.kp-label{font-size:11px;color:var(--text-muted);margin-bottom:2px}
+.kp-price{font-size:15px;font-weight:700;color:var(--teal)}
+@media(max-width:768px){
+  /* Tighten compare widget overall */
+  .compare-widget{padding:0.875rem !important}
+  .compare-header{margin-bottom:0.6rem !important}
+  .compare-title{font-size:1rem !important}
+  /* Tighten compare grid */
+  .compare-grid{gap:6px !important; margin-bottom:0.6rem !important}
+  .compare-col{padding:8px 10px !important}
+  .compare-col-label{font-size:10px !important; margin-bottom:3px !important}
+  .compare-price{font-size:18px !important}
+  .compare-verdict{font-size:11px !important}
+  /* Tighten bar */
+  .compare-bar-wrap{margin-top:0.5rem !important}
+  .compare-bar-label{font-size:10px !important; margin-bottom:2px !important}
+  /* Tighten Our Take */
+  .compare-widget > div[style*="border-left"]{padding:0.5rem 0.75rem !important; margin-top:0.5rem !important}
+  .compare-widget > div[style*="border-left"] > div:first-child{font-size:10px !important; margin-bottom:0.35rem !important}
+  .compare-widget > div[style*="border-left"] > div:nth-child(2){font-size:12px !important; margin-bottom:0.35rem !important; padding-bottom:0.35rem !important}
+  .compare-widget > div[style*="border-left"] > div:last-child > div{font-size:11px !important; gap:3px !important}
+  .mobile-action-bar{display:flex;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1.5px solid var(--border);padding:10px 1rem 20px;gap:10px;z-index:200;box-shadow:0 -4px 16px rgba(0,0,0,0.08)}
+  .mobile-action-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none}
+  .mobile-bar-call{background:var(--teal-light);color:var(--teal);border:1.5px solid var(--teal)}.mobile-bar-web{background:var(--teal);color:white}
+  body{padding-bottom:80px}
+  .page-layout{grid-template-columns:1fr !important;padding:0.75rem 1rem;gap:1rem}
+  .sidebar{display:none}.practice-photo{height:200px;border-radius:10px}.practice-name{font-size:1.5rem}.header-nav{display:none}
+  #practice-map{height:160px !important}
+}
+@media(max-width:768px){
+  /* Tighten key prices */
+  .key-prices-grid{grid-template-columns:repeat(3,1fr) !important; gap:5px !important; padding-top:0.5rem !important}
+  .kp-item{padding:6px 8px !important}
+  .kp-label{font-size:9px !important; margin-bottom:1px !important}
+  .kp-price{font-size:13px !important; font-weight:700}
+  /* Compare widget */
+  .compare-header{flex-direction:column; align-items:flex-start; gap:0.5rem}
+  .compare-select{width:100%}
+  .compare-grid{grid-template-columns:1fr; gap:8px}
+  .compare-price{font-size:22px}
+  /* Sections */
+  .section{border-radius:10px}
+  .section-inner{padding:1rem}
+  .section-title{font-size:1.1rem}
+  .price-row{font-size:13px; padding:8px 12px}
+  .price-cat-label{font-size:10px; padding:6px 12px}
+  .hours-row{padding:7px 12px; font-size:13px}
+  /* Our Take */
+  .compare-widget > div:last-child{padding:0.75rem 1rem}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <a href="/" class="logo">what<span>dentist</span>.co.uk</a>
+  <nav class="header-nav"><a href="/">Find a Dentist</a><a href="/">NHS Alternative</a><a href="/">Cosmetic</a></nav>
+</header>
+<div style="max-width:1100px;margin:0 auto;padding:1rem 1.5rem 0;font-size:13px;color:var(--text-muted)">
+  <a href="/" style="color:var(--teal);text-decoration:none">Home</a> › <a href="/?area=Mill Hill" style="color:var(--teal);text-decoration:none">Mill Hill Dentists</a> › Dental Wellness Mill Hill
+</div>
+<div class="page-layout">
+  <div>
+    <a href="/" style="display:inline-flex;align-items:center;gap:6px;color:var(--teal);text-decoration:none;font-size:14px;font-weight:500;margin-bottom:1rem">← Back to all practices</a>
+    <img src="data:image/jpeg;base64,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" alt="Dental Wellness Mill Hill, 46 The Broadway, London NW7 3LH" class="practice-photo">
+    <div style="margin-bottom:1.5rem">
+      <h1 class="practice-name">Dental Wellness Mill Hill</h1>
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:0.75rem">📍 <a href="https://www.google.com/maps/search/?api=1&query=46+The+Broadway%2C+London+NW7+3LH" target="_blank" style="color:var(--teal);text-decoration:none;border-bottom:1px dotted var(--teal)">46 The Broadway, London NW7 3LH</a></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem">
+        <span style="color:var(--accent)">★★★★★</span>
+        <span style="font-weight:700">5.0</span>
+        <a href="https://www.google.com/maps/search/?api=1&query=Dental+Wellness+Mill+Hill" target="_blank" style="color:var(--text-muted);font-size:13px;text-decoration:none;border-bottom:1px dotted var(--text-muted)">555+ reviews</a>
+        <span style="font-size:12px;padding:4px 10px;border-radius:4px;font-weight:500;background:#fef3c7;color:#92400e">Private</span><span style="font-size:12px;padding:4px 10px;border-radius:4px;font-weight:500;background:#d1fae5;color:#065f46">Invisalign</span><span style="font-size:12px;padding:4px 10px;border-radius:4px;font-weight:500;background:#ede9fe;color:#5b21b6">Implants</span><span style="font-size:12px;padding:4px 10px;border-radius:4px;font-weight:500;background:#ecfdf5;color:#065f46">0% Finance</span><span style="font-size:12px;padding:4px 10px;border-radius:4px;font-weight:500;background:#f0fdf4;color:#166534">Open Weekends</span>
+      </div>
+    </div>
+    <div class="compare-widget">
+      <div style="margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.75rem">Key prices at a glance</div>
+        <div class="key-prices-grid">
+          <div class="kp-item"><div class="kp-label">Check-up</div><div class="kp-price">£45</div></div>
+          <div class="kp-item"><div class="kp-label">Hygiene</div><div class="kp-price">£67</div></div>
+          <div class="kp-item"><div class="kp-label">Filling</div><div class="kp-price">£165</div></div>
+          <div class="kp-item"><div class="kp-label">Invisalign</div><div class="kp-price">£3,695</div></div>
+          <div class="kp-item"><div class="kp-label">Whitening</div><div class="kp-price">£340</div></div>
+        </div>
+      </div>
+      <div class="compare-header">
+        <div class="compare-title">How does Dental Wellness compare to London?</div>
+        <select class="compare-select" id="compare-select" onchange="updateCompare(this.value)">
+          <option value="checkup">Check-up</option>
+          <option value="hygiene">Hygiene</option>
+          <option value="filling">Filling</option>
+          <option value="bonding">Composite Bonding</option>
+          <option value="invisalign">Invisalign</option>
+          <option value="whitening">Whitening</option>
+          <option value="implant">Implant</option>
+        </select>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-col highlight">
+          <div class="compare-col-label">Dental Wellness</div>
+          <div class="compare-price" id="comp-practice-price">£45</div>
+          <div class="compare-verdict" id="comp-verdict"></div>
+        </div>
+        <div class="compare-col" style="background:#f3f4f6">
+          <div class="compare-col-label">London average</div>
+          <div class="compare-price" id="comp-avg-price"></div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px">based on <span class="practice-count-span"></span> practices</div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-col-label">London range</div>
+          <div id="comp-range" style="font-size:14px;font-weight:600;color:var(--text-muted);margin-top:4px"></div>
+        </div>
+      </div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar-label">
+          <span>Dental Wellness</span><span>London average</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div class="compare-bar-track"><div class="compare-bar-fill bar-practice" id="bar-practice" style="width:68%"></div></div>
+          <div class="compare-bar-track"><div class="compare-bar-fill bar-london" style="width:100%"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:1rem 1.25rem;background:var(--teal-light);border-left:3px solid var(--teal);border-radius:0 8px 8px 0">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--teal);margin-bottom:0.6rem">Our Take</div>
+        <div style="font-size:14px;font-weight:600;color:var(--teal-dark);margin-bottom:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(10,110,92,0.15)">🎯 Best for: <span style="font-weight:700">Extended hours & weekend appointments</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)">
+            <span style="flex-shrink:0">📍</span><span>Premium clinic open 7 days with extended weekday hours</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)">
+            <span style="flex-shrink:0">📉</span><span id="our-take-comparison">Calculating...</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)">
+            <span style="flex-shrink:0">⭐</span><span>Rated <strong>5.0</strong> from <strong>555 reviews</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-inner" style="padding-bottom:0.5rem"><h2 class="section-title" style="margin-bottom:0">Full Price List</h2></div>
+      <div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Consultations</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Comprehensive Examination</span><span style="font-weight:600;color:var(--teal)">£45</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Emergency Appointment</span><span style="font-weight:600;color:var(--teal)">£45</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Invisalign Consultation</span><span style="font-weight:600;color:var(--teal)">Free</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Implant Consultation</span><span style="font-weight:600;color:var(--teal)">Free</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Hygiene</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Hygiene Gold Package (25 min)</span><span style="font-weight:600;color:var(--teal)">£67</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Hygiene Diamond Package (30 min)</span><span style="font-weight:600;color:var(--teal)">£98</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Hygiene Platinum Package (60 min)</span><span style="font-weight:600;color:var(--teal)">£190</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Scale and Polish (with dentist)</span><span style="font-weight:600;color:var(--teal)">£85</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Fillings</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>White Composite Filling</span><span style="font-weight:600;color:var(--teal)">from £165</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Root Canal</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Root Canal (front)</span><span style="font-weight:600;color:var(--teal)">from £645</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Root Canal (molar)</span><span style="font-weight:600;color:var(--teal)">from £745</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Crowns & Veneers</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Crown (porcelain)</span><span style="font-weight:600;color:var(--teal)">from £700</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Veneer</span><span style="font-weight:600;color:var(--teal)">from £775</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Cosmetic</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Composite Bonding</span><span style="font-weight:600;color:var(--teal)">from £250</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Invisalign</span><span style="font-weight:600;color:var(--teal)">from £3,695</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Teeth Whitening (home kit)</span><span style="font-weight:600;color:var(--teal)">£340</span></div><div style="display:block;width:100%;background:var(--teal);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:7px 16px">Implants</div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Dental Implant</span><span style="font-weight:600;color:var(--teal)">Price on consultation</span></div>
+      <div class="section-inner" style="padding-top:0.5rem;padding-bottom:1rem"><p style="font-size:11px;color:var(--text-muted)">Prices from practice website. Always confirm directly before booking.</p></div>
+    </div>
+    <div class="section">
+      <div class="section-inner"><h2 class="section-title">Opening Hours</h2></div>
+      <div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;"><span style="font-weight:500">Monday</span><span style="">8am–8pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;background:#e6f4f1;"><span style="font-weight:500">Tuesday</span><span style="">8am–7pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;"><span style="font-weight:500">Wednesday</span><span style="">8:45am–6pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;background:#e6f4f1;"><span style="font-weight:500">Thursday</span><span style="">8:45am–6pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;"><span style="font-weight:500">Friday</span><span style="">8am–5pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;background:#e6f4f1;"><span style="font-weight:500">Saturday</span><span style="">8:45am–3pm</span></div><div style="display:flex;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);font-size:14px;"><span style="font-weight:500">Sunday</span><span style="">8:45am–2pm</span></div>
+    </div>
+    <div class="section">
+      <div class="section-inner">
+        <h2 class="section-title">About Dental Wellness Mill Hill</h2>
+        <div style="font-size:14px;line-height:1.8;color:var(--text-muted)">
+          <p style="margin-bottom:1rem">Dental Wellness Mill Hill is a private dental practice on The Broadway in Mill Hill, NW7. Check-ups start at £45 and Invisalign from £3,695. Open 7 days a week including until 8pm on Mondays — one of the most accessible practices in North West London. Rated 5.0 stars from over 555 reviews, with 0% finance available.</p>
+          <p>The practice serves patients across Mill Hill, Edgware, Hendon, Finchley and surrounding NW7.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:14px">
+          <span style="background:#003DA5;color:white;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;flex-shrink:0">UNDERGROUND</span>
+          <div><strong>Nearest tube:</strong> Mill Hill East (Northern line) · ~8 min walk</div>
+        </div>
+      </div>
+      <div id="practice-map" style="height:200px;width:100%"></div>
+    </div>
+    <div style="background:white;border:1.5px dashed var(--border);border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+      <div style="font-size:13px;color:var(--text-muted)"><strong style="color:var(--text);display:block;margin-bottom:2px">Are you the practice owner?</strong>Update your listing or get featured to reach more patients.</div>
+      <a href="mailto:hello@whatdentist.co.uk?subject=Claim - Dental Wellness Mill Hill" style="border:1.5px solid var(--teal);color:var(--teal);padding:7px 14px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none">Claim this listing →</a>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;padding-bottom:1.5rem">Prices verified from practice website · Last checked April 2026 · <a href="/" style="color:var(--teal)">WhatDentist.co.uk</a></p>
+  </div>
+  <div class="sidebar">
+    <div style="background:white;border:1.5px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="background:var(--teal-dark);padding:1.25rem">
+        <div style="font-family:'DM Serif Display',serif;font-size:18px;color:white;margin-bottom:3px">Dental Wellness Mill Hill</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px">Mill Hill, NW7 3LH</div>
+      </div>
+      <div style="padding:1.25rem;display:flex;flex-direction:column;gap:10px">
+        <a href="https://dentalwellnessmillhill.co.uk" target="_blank" class="cta-btn cta-primary">🌐 Visit Website →</a>
+        <a href="tel:02071239308" class="cta-btn cta-secondary">📞 Call 020 7123 9308</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=46+The+Broadway%2C+London+NW7+3LH" target="_blank" class="cta-btn cta-secondary">📍 Get Directions →</a>
+        <div style="font-size:13px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border);line-height:1.7"><strong style="color:var(--text);display:block;margin-bottom:2px">Address</strong>46 The Broadway, London NW7 3LH</div>
+        <div style="font-size:13px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border);line-height:1.6"><strong style="color:var(--text);display:block;margin-bottom:1px">NHS patients</strong>Private only</div>
+        <div style="font-size:13px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border)"><strong style="color:var(--text);display:block;margin-bottom:1px">Finance</strong>0% APR available</div>
+      </div>
+    </div>
+    <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem">Compare nearby</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:0.75rem">Other practices in Mill Hill</div>
+      <a href="/" style="display:block;background:var(--teal-light);color:var(--teal);text-align:center;padding:9px;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none">See all London practices →</a>
+    </div>
+  </div>
+</div>
+<footer style="background:#0a1a16;padding:2rem;text-align:center;color:rgba(255,255,255,0.4);font-size:13px;margin-top:2rem">
+  <strong style="color:rgba(255,255,255,0.7)">WhatDentist.co.uk</strong> — Helping patients compare private dental prices across London.<br>
+  © 2026 WhatDentist.co.uk · <a href="#" style="color:rgba(255,255,255,0.4)">Privacy Policy</a>
+</footer>
+<div class="mobile-action-bar">
+  <a href="tel:02071239308" class="mobile-bar-call">📞 Call Practice</a>
+  <a href="https://dentalwellnessmillhill.co.uk" target="_blank" class="mobile-bar-web">🌐 Visit Website</a>
+</div>
+<script>
+const practiceData = {
+  checkup:    {practice:45.0, practiceLabel:"£45"},
+  hygiene:    {practice:67.0, practiceLabel:"£67"},
+  filling:    {practice:165.0, practiceLabel:"£165"},
+  bonding:    {practice:250.0, practiceLabel:"£250"},
+  invisalign: {practice:3695.0, practiceLabel:"£3,695"},
+  whitening:  {practice:340.0, practiceLabel:"£340"},
+  implant:    {practice:null, practiceLabel:null},
+};
+
+const compData = {};
+Object.keys(londonAverages).forEach(key => {
+  const avg = londonAverages[key];
+  const p = practiceData[key] || {practice:null,practiceLabel:null};
+  compData[key] = {label:avg.label,avg:avg.avg,practice:p.practice,practiceLabel:p.practiceLabel,min:avg.min,max:avg.max};
+});
+
+function updateCompare(key) {
+  const d = compData[key]; if(!d) return;
+  document.getElementById('comp-avg-price').textContent = '£' + d.avg.toLocaleString();
+  document.getElementById('comp-range').textContent = d.min + ' – ' + d.max;
+  if(!d.practice) {
+    document.getElementById('comp-practice-price').textContent = 'N/A';
+    document.getElementById('comp-verdict').textContent = 'No data';
+    document.getElementById('bar-practice').style.width = '0%';
+    return;
+  }
+  document.getElementById('comp-practice-price').textContent = d.practiceLabel;
+  const diff = Math.round(((d.avg - d.practice) / d.avg) * 100), abs = Math.abs(diff);
+  const el = document.getElementById('comp-verdict');
+  if(diff > 0) { el.textContent = '✓ ' + abs + '% below London average'; el.style.color = '#065f46'; }
+  else if(diff < 0) { el.textContent = '↑ ' + abs + '% above London average'; el.style.color = '#92400e'; }
+  else { el.textContent = '= At London average'; el.style.color = 'var(--text-muted)'; }
+  document.getElementById('bar-practice').style.width = Math.min(100, Math.round((d.practice / d.avg) * 100)) + '%';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateCompare('checkup');
+  document.querySelectorAll('.practice-count-span').forEach(el => el.textContent = practiceCount);
+  const pc = 45.0, avg = londonAverages.checkup;
+  if(avg && pc) {
+    const diff = Math.round(((avg.avg - pc) / avg.avg) * 100), abs = Math.abs(diff);
+    const el = document.getElementById('our-take-comparison');
+    if(el) {
+      if(diff > 0) el.innerHTML = '<strong>' + abs + '% below</strong> the London average for check-ups (avg ' + avg.avgFmt + ')';
+      else if(diff < 0) el.innerHTML = '<strong>' + abs + '% above</strong> the London average for check-ups (avg ' + avg.avgFmt + ')';
+      else el.innerHTML = 'At the London average for check-ups (' + avg.avgFmt + ')';
+    }
+  }
+  const map = L.map('practice-map', {zoomControl:false,dragging:false,scrollWheelZoom:false}).setView([51.6189,-0.1], 15);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+  L.marker([51.6189,-0.1]).addTo(map).bindPopup('<strong>Dental Wellness Mill Hill</strong><br>46 The Broadway, London NW7 3LH').openPopup();
+});
+</script>
+</body>
+</html>
