@@ -216,16 +216,36 @@ footer strong { color: rgba(255,255,255,0.7); }
 <header class="header">
   <div class="logo">what<span>dentist</span>.co.uk</div>
   <nav class="header-nav">
-    <a href="#">Find a Dentist</a>
-    <a href="#">NHS Alternative</a>
-    <a href="#">Cosmetic</a>
-    <a href="#">For Practices</a>
-    <a href="#" class="btn-list" onclick="showFeaturedModal();return false;">List Your Practice</a>
+    <a href="/#results-anchor">Find a Dentist</a>
+    <button onclick="openListModal()" class="btn-list">List Your Practice</button>
   </nav>
-  <button class="hamburger" onclick="this.classList.toggle('open')" aria-label="Menu">
+  <button class="hamburger" id="burger-btn" aria-label="Menu" onclick="toggleBurger()">
     <span></span><span></span><span></span>
   </button>
 </header>
+
+<!-- Burger menu -->
+<div id="burger-menu" style="display:none;position:fixed;top:60px;left:0;right:0;background:var(--teal-dark);z-index:999;padding:1rem;border-bottom:2px solid rgba(255,255,255,0.1);box-shadow:0 4px 16px rgba(0,0,0,0.2)">
+  <a href="/#results-anchor" onclick="toggleBurger()" style="display:block;color:white;text-decoration:none;font-size:15px;font-weight:500;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Find a Dentist</a>
+  <button onclick="toggleBurger();openListModal()" style="display:block;width:100%;text-align:left;background:var(--accent);color:var(--teal-dark);border:none;border-radius:6px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px">List Your Practice</button>
+</div>
+
+<!-- List Your Practice modal -->
+<div id="list-overlay" onclick="closeListModal(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:5000;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:white;border-radius:14px;padding:1.5rem;max-width:420px;width:100%;position:relative">
+    <button type="button" onclick="closeListModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted)">×</button>
+    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:0.25rem;color:var(--text)">List Your Practice</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Get your practice in front of patients actively comparing prices. We'll be in touch within 24 hours.</p>
+    <div id="list-form-inner" style="display:flex;flex-direction:column;gap:10px">
+      <input id="list-practice" type="text" placeholder="Practice name" style="border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;box-sizing:border-box">
+      <input id="list-name" type="text" placeholder="Your name" style="border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;box-sizing:border-box">
+      <input id="list-email" type="email" placeholder="Email address" style="border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;box-sizing:border-box">
+      <input id="list-phone" type="tel" placeholder="Phone number (optional)" style="border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;width:100%;box-sizing:border-box">
+      <button type="button" onclick="submitList()" style="background:var(--teal);color:white;border:none;border-radius:7px;padding:11px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:4px">Send enquiry →</button>
+    </div>
+    <div id="list-success" style="display:none;text-align:center;padding:1rem 0;color:var(--teal);font-size:14px;font-weight:600">✓ Thanks! We'll be in touch within 24 hours.</div>
+  </div>
+</div>
 
 <div class="hero">
   <div class="hero-inner">
@@ -392,7 +412,7 @@ footer strong { color: rgba(255,255,255,0.7); }
 <div class="cta-section">
   <h2>Own a dental practice?</h2>
   <p>Your practice is listed free. Upgrade to featured placement and reach patients actively comparing prices in your area.</p>
-  <a href="#" class="cta-btn" onclick="showFeaturedModal();return false;">Get Featured — from £49/month</a>
+  <a href="#" class="cta-btn" onclick="openListModal();return false;">Get Featured — from £49/month</a>
 </div>
 
 <footer>
@@ -608,10 +628,30 @@ function openPractice(id){
   window.location.href = '/dentists/' + p.slug;
 }
 
-function showFeaturedModal(){
-  window.location.href = 'mailto:hello@whatdentist.co.uk?subject=Featured listing enquiry';
+function toggleBurger(){
+  const menu = document.getElementById('burger-menu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
 }
 
+function openListModal(){ document.getElementById('list-overlay').style.display = 'flex'; }
+function closeListModal(e){
+  if(e && e.target !== document.getElementById('list-overlay')) return;
+  document.getElementById('list-overlay').style.display = 'none';
+}
+function submitList(){
+  const practice = document.getElementById('list-practice').value.trim();
+  const name = document.getElementById('list-name').value.trim();
+  const email = document.getElementById('list-email').value.trim();
+  const phone = document.getElementById('list-phone').value.trim();
+  if(!practice || !name || !email){ alert('Please fill in practice name, your name and email.'); return; }
+  const subject = encodeURIComponent('List Practice - ' + practice);
+  const body = encodeURIComponent(`Practice: ${practice}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`);
+  window.location.href = `mailto:hello@whatdentist.co.uk?subject=${subject}&body=${body}`;
+  document.getElementById('list-form-inner').style.display = 'none';
+  document.getElementById('list-success').style.display = 'block';
+}
+
+function showFeaturedModal(){ openListModal(); }
 function closeModal(){}
 
 document.addEventListener('DOMContentLoaded',()=>{
